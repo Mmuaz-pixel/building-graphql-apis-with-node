@@ -13,14 +13,28 @@ async function setupServer(){
 				id: ID!
 				title: String!, 
 				location: String, 
-				Available: Boolean
+				Available: Boolean, 
+				owner: Owner
+			}
+
+			type Owner {
+				id: ID!
+				name: String!
+				exampleId: ID!
 			}
 
 			type Query {
-				getExample: [Example]
+				getExamples: [Example]
 			}
 		`, 
-		resolvers: {}
+		resolvers: {
+			Example: {
+				owner: (Example) => ({id: 1, name: 'name', exampleId: Example.id})
+			}, 
+			Query: {
+				getExamples: () => [{id: 1, title: '1st one', location: '1st loc', Available: false}, {id: 2, title: '2nd one', location: '2nd loc', Available: true}]
+			}
+		}
 	}); 
 	await server.start(); 
 	app.use(bodyParser.json()); 

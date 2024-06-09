@@ -4,7 +4,7 @@ import express from "express";
 import dotenv from "dotenv";
 
 dotenv.config();
-const PORT = Number(process.env.PORT as String) || 8000;
+const PORT = Number(process.env.PORT) || 8000;
 
 async function start() {
   const app = express();
@@ -20,7 +20,7 @@ async function start() {
     resolvers: {},
   });
 
-  await graphql.start(); 
+  await graphql.start();
 
   app.use('/graphql', expressMiddleware(graphql)); 
 
